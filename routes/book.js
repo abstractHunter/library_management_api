@@ -11,8 +11,15 @@ router.get("/", async(req, res) => {
 });
 
 router.post("/", (req, res) => {
-    res.send("got a POST request");
-    console.log(`PID : ${process.pid} : ${new Date()} - POST /books`);
+    const book = req.body;
+    bookController.createBook(book)
+        .then(book => {
+            res.status(201).json(book);
+        }).catch(err => {
+            res.status(500).json(err);
+        }).finally(() => {
+            console.log(`PID : ${process.pid} : ${new Date()} - POST /books`);
+        });
 });
 
 router.put("/", (req, res) => {
