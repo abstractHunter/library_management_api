@@ -4,6 +4,9 @@ const express = require("express");
 const cluster = require("cluster");
 const os = require("os");
 
+const indexRouter = require("./routes/index");
+const bookRouter = require("./routes/book");
+
 // constants
 const app = express();
 const nbCPUs = os.cpus().length;
@@ -11,10 +14,9 @@ const config = {
     port: process.env.PORT,
 }
 
-
-app.get("/", (req, res) => {
-    res.send("Hello World");
-});
+// routes
+app.use("/", indexRouter);
+app.use("/books", bookRouter);
 
 
 if (cluster.isMaster) {
