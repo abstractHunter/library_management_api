@@ -1,9 +1,12 @@
 const express = require("express");
 const router = express.Router();
+const Book = require("../models/Book.js");
+const bookController = require("../controllers/book.controller.js");
 
 
-router.get("/", (req, res) => {
-    res.send("got a GET request");
+router.get("/", async(req, res) => {
+    const books = await bookController.getAllBooks()
+    res.status(200).json(books);
     console.log(`PID : ${process.pid} : ${new Date()} - GET /books`);
 });
 
