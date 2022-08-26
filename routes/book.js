@@ -12,7 +12,7 @@ router.get("/", async(req, res) => {
 
 router.post("/", (req, res) => {
     const book = req.body;
-    const isAlphanum = /[a-zA-Z0-9]/; // allow only alphanumeric and hyphen
+    const isAlphanum = /^[a-zA-Z0-9_\-\s]+$/; // allow only alphanumeric and hyphen, dash or space
     const isDate = /\d{4}-\d{2}-\d{2}/; // allow only date format YYYY-MM-DD
 
     if (!book.title || !book.author || !book.pubDate) {
@@ -22,12 +22,7 @@ router.post("/", (req, res) => {
     }
     if (!isAlphanum.test(book.title)) {
         return res.status(400).json({
-            message: "Title must be alphanumeric and hyphen separated"
-        });
-    }
-    if (!isAlphanum.test(book.author.firstName) || !isAlphanum.test(book.author.lastName)) {
-        return res.status(400).json({
-            message: "Author must be alphanumeric and hyphen separated"
+            message: "Title must be alphanumeric and hyphen, dash or space separated"
         });
     }
     if (!isDate.test(book.pubDate)) {
