@@ -12,6 +12,32 @@ router.get("/", async(req, res) => {
 
 router.post("/", (req, res) => {
     const book = req.body;
+    const isAlphanum = /[a-zA-Z0-9]/; // allow only alphanumeric and hyphen
+    const isDate = /\d{4}-\d{2}-\d{2}/; // allow only date format YYYY-MM-DD
+
+    if (!book.title || !book.author || !book.pubDate) {
+        return res.status(400).json({
+            message: "Title, Author and PubDate are required"
+        });
+    }
+    if (!isAlphanum.test(book.title)) {
+        return res.status(400).json({
+            message: "Title must be alphanumeric and hyphen separated"
+        });
+    }
+    if (!isAlphanum.test(book.author.firstName) || !isAlphanum.test(book.author.lastName)) {
+        return res.status(400).json({
+            message: "Author must be alphanumeric and hyphen separated"
+        });
+    }
+    if (!isDate.test(book.pubDate)) {
+        return res.status(400).json({
+            message: "PubDate must be in YYYY-MM-DD format"
+        });
+    }
+
+    // console.log(book);
+
     bookController.createBook(book)
         .then(book => {
             res.status(201).json(book);
