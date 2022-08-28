@@ -30,8 +30,52 @@ async function getBookById(id) {
     }
 }
 
+async function getBooksByTitle(title) {
+    try {
+        const books = await Book.find({ title: { $regex: '.*' + title + '.*' } });
+        return books;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+
+async function updateBookById(id, book) {
+    try {
+        const updatedBook = await Book.findByIdAndUpdate(id, book, { new: true });
+        return updatedBook;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+
+async function deleteBookById(id) {
+    try {
+        const book = await Book.findByIdAndDelete(id);
+        return book;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+
+async function deleteAllBooks() {
+    try {
+        const allBooks = await Book.deleteMany();
+        return allBooks;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+
 module.exports = {
     createBook,
     getAllBooks,
     getBookById,
+    getBooksByTitle,
+    updateBookById,
+    deleteAllBooks,
+    deleteBookById
 };
