@@ -1,17 +1,5 @@
 const mongoose = require("mongoose");
 
-const authorSchema = new mongoose.Schema({
-    firstName: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    lastName: {
-        type: String,
-        required: true,
-        trim: true
-    }
-});
 
 const bookSchema = new mongoose.Schema({
     title: {
@@ -20,7 +8,7 @@ const bookSchema = new mongoose.Schema({
         unique: true,
     },
     author: [{
-        type: authorSchema,
+        type: String,
         required: true
     }],
     genre: String,
