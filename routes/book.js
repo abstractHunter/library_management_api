@@ -54,6 +54,42 @@ router.get("/byId/:id", async(req, res) => {
     return res.status(200).json(book);
 });
 
+router.get("/byAuthor/:author", async(req, res) => {
+    const author = req.params.author;
+
+    // validate author
+
+    // get books by author
+    const books = await bookController.getBooksByAuthor(author);
+    if (books.length === 0) {
+        return res.status(404).json({
+            message: "No books found"
+        });
+    }
+    console.log(`PID : ${process.pid} : ${new Date()} - GET /books/byAuthor/${author}`);
+    return res.status(200).json(books);
+});
+
+router.get("/byTitle/:title", async(req, res) => {
+    const title = req.params.title;
+
+    // validate title
+    if (!isValidTitle(title)) {
+        return res.status(400).json({
+            message: "Invalid title"
+        });
+    }
+
+    // get book by title
+    const book = await bookController.getBookByTitle(title);
+    if (!book) {
+        return res.status(404).json({
+            message: "Book not found"
+        });
+    }
+    console.log(`PID : ${process.pid} : ${new Date()} - GET /books/byTitle/${title}`);
+    return res.status(200).json(book);
+});
 
 // ########################################################################################
 // ###############################     POST /books     ####################################

@@ -30,6 +30,26 @@ async function getBookById(id) {
     }
 }
 
+async function getBooksByAuthor(author) {
+    try {
+        const books = await Book.find({ $or: [{ "author.firstName": author }, { "author.lastName": author }] });
+        return books;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+
+async function getBookByTitle(title) {
+    try {
+        const book = await Book.findOne({ title });
+        return book;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+
 async function getBooksByTitle(title) {
     try {
         const books = await Book.find({ title: { $regex: '.*' + title + '.*' } });
@@ -74,6 +94,8 @@ module.exports = {
     createBook,
     getAllBooks,
     getBookById,
+    getBooksByAuthor,
+    getBookByTitle,
     getBooksByTitle,
     updateBookById,
     deleteAllBooks,

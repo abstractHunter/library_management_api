@@ -10,6 +10,8 @@ A library management API built with [Node.js](https://nodejs.org/), [Express](ht
 - /all => Returns all books in the library.
 - /byId/:id => Returns a book with the given id.
 - /like/:title => Returns all books which contain the given title.
+- /byAuthor/:author => Returns all books which have the given author firstname or lastname.
+- /byTitle/:title => Returns all books which have the given title.
 
 ### POST  /books  
 - /new => Creates a new book.
